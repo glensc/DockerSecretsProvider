@@ -11,7 +11,7 @@ use Pimple\ServiceProviderInterface;
  *  echo "This is a secret" | docker secret create my_secret_data -
  *
  *  $app->register(new DockerSecretsProvider([
- *      'my_secret' => 'my.secret',
+ *      'my_secret_data' => 'my.secret',
  *  ]));
  *
  * This would make $app['my.secret'] read as "This is a secret"
