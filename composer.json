@@ -1,0 +1,30 @@
+{
+	"name": "glen/docker-secrets-provider",
+	"description": "Pimple Docker Secrets ServiceProvide",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Elan Ruusamäe",
+			"email": "glen@pld-linux.org",
+			"role": "Developer"
+		}
+	],
+	"config": {
+		"platform": {
+			"php": "5.3.29"
+		},
+		"sort-packages": true
+	},
+	"archive": {
+		"exclude": ["/.*", "/*.json"]
+	},
+	"autoload": {
+		"psr-4": {
+			"glen\\DockerSecretsProvider\\": "src/"
+		}
+	},
+	"require": {
+		"php": "^5.3.0 || ^7.0",
+		"pimple/pimple": "^3.0"
+	}
+}
