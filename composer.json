@@ -1,6 +1,6 @@
 {
 	"name": "glen/docker-secrets-provider",
-	"description": "Pimple Docker Secrets ServiceProvide",
+	"description": "Pimple Docker Secrets ServiceProvider",
 	"license": "MIT",
 	"authors": [
 		{
