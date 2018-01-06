@@ -22,13 +22,13 @@ but you don't want to store in the image or in source control, such as:
 
 Create the secret, using `docker` cli
 
- ```sh
- echo "This is a secret" | docker secret create my_secret_data -
- ```
+```sh
+echo -n "This is a secret" | docker secret create my_secret_data -
+```
 
 Mount it into container, this example is for `docker-compose` or `docker stack deploy`
- 
- ```yml
+
+```yml
 version: "3.1"
 
 services:
@@ -49,7 +49,6 @@ Map the secret in Pimple container
 $app->register(new DockerSecretsProvider(array(
    'my_secret_data' => 'my.secret',
 )));
- ```
- 
- This would make `$app['my.secret']` read as `"This is a secret"`
- 
+```
+
+This would make `$app['my.secret']` read as `"This is a secret"`
