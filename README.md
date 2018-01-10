@@ -43,6 +43,11 @@ secrets:
 
 ```
 
+Require the library
+```sh
+composer require glen/docker-secrets-provider
+```
+
 Map the secret in Pimple container
 
 ```php
