@@ -20,11 +20,13 @@ but you don't want to store in the image or in source control, such as:
 
 ## Usage
 
-Create the secret, using `docker` cli
+Create the secret, using `docker` CLI
 
 ```sh
 echo -n "This is a secret" | docker secret create my_secret_data -
 ```
+
+Note the `-n` parameter with echo; this is necessary to suppress the trailing newline character. If you don't do this, your value is not correctly encoded.
 
 Mount it into container, this example is for `docker-compose` or `docker stack deploy`
 
