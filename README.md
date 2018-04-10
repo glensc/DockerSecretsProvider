@@ -59,3 +59,39 @@ $app->register(new DockerSecretsProvider(array(
 ```
 
 This would make `$app['my.secret']` read as `"This is a secret"`
+
+In case of nested structure (`$app['option']['key']`),
+the value can be callback, to allow assigning value to sub-keys.
+
+Here's example using [saxulum/saxulum-doctrine-mongodb-odm-provider]:
+
+```php
+$this->register(new DockerSecretsProvider(array(
+    'mongodb' => function ($secretReader, $app) {
+        // make copy for later assignment,
+        $options = $app['mongodb.options'];
+
+        // make as function to avoid loading secret to memory before it's use is needed
+        $app['mongodb.options'] = function () use ($secretReader, $options, $app) {
+            $options['options']['password'] = $secretReader();
+
+            return $options;
+        };
+    },
+)));
+```
+
+To avoid `Indirect modification of overloaded element`,
+the value needs to be made copy and assigned again:
+
+```php
+// yields "Indirect modification of overloaded element" notice:
+$app['mongodb.options']['options']['password'] = 'secret';
+
+// workaround for above problem:
+$options = $app['mongodb.options'];
+$options['options']['password'] = 'secret';
+$app['mongodb.options'] = $options;
+```
+
+[saxulum/saxulum-doctrine-mongodb-odm-provider]: https://packagist.org/packages/saxulum/saxulum-doctrine-mongodb-odm-provider
