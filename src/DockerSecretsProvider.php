@@ -49,7 +49,7 @@ class DockerSecretsProvider implements ServiceProviderInterface {
 			};
 
 			// let closure figure out what to do with the value
-			if (is_callable($value)) {
+			if (method_exists($value, '__invoke')) {
 				$value($secretReader, $app);
 
 				continue;
