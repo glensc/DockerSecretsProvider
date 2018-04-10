@@ -66,7 +66,7 @@ the value can be callback, to allow assigning value to sub-keys.
 Here's example using [saxulum/saxulum-doctrine-mongodb-odm-provider]:
 
 ```php
-$this->register(new DockerSecretsProvider([
+$this->register(new DockerSecretsProvider(array(
     'mongodb' => function ($secretReader, $app) {
         // make copy for later assignment,
         $options = $app['mongodb.options'];
@@ -78,7 +78,7 @@ $this->register(new DockerSecretsProvider([
             return $options;
         };
     },
-]));
+)));
 ```
 
 To avoid `Indirect modification of overloaded element`,
