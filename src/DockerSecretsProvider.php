@@ -36,17 +36,26 @@ class DockerSecretsProvider implements ServiceProviderInterface {
 	 * @inheritdoc
 	 */
 	public function register(Container $app) {
-		foreach ($this->secrets as $secretName => $configKey) {
+		foreach ($this->secrets as $secretName => $value) {
 			$fileName = self::SECRETS_PATH . '/' . $secretName;
+
 			if (!file_exists($fileName)) {
 				continue;
 			}
 
-			// export
-			$app[$configKey] = function () use ($fileName) {
+			$secretReader = function () use ($fileName) {
 				// allow IO errors to get NULL or FALSE return values
 				return file_get_contents($fileName);
 			};
+
+			// let closure figure out what to do with the value
+			if (is_callable($value)) {
+				$value($secretReader, $app);
+
+				continue;
+			}
+
+			$app[$value] = $secretReader;
 		}
 	}
 }

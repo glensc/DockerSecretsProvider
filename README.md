@@ -59,3 +59,27 @@ $app->register(new DockerSecretsProvider(array(
 ```
 
 This would make `$app['my.secret']` read as `"This is a secret"`
+
+In case of nested structure, the value can be callback,
+this allows to assign value to array sub-keys.
+
+However, in case the parent array is also lazy inited,
+you need to make copy and assign the value again.
+
+Here's example using [saxulum/saxulum-doctrine-mongodb-odm-provider]:
+
+```php
+$this->register(new DockerSecretsProvider([
+    'mongodb' => function ($secretReader, $app) {
+        $options = $app['mongodb.options'];
+
+        $app['mongodb.options'] = function () use ($secretReader, $options, $app) {
+            $options['options']['password'] = $secretReader();
+
+            return $options;
+        };
+    },
+]));
+```
+
+[saxulum/saxulum-doctrine-mongodb-odm-provider]: https://packagist.org/packages/saxulum/saxulum-doctrine-mongodb-odm-provider
