@@ -16,7 +16,7 @@ but you don't want to store in the image or in source control, such as:
 [Pimple]: https://pimple.symfony.com/
 [ServiceProvider]: https://pimple.symfony.com/#extending-a-container
 [Silex]: https://silex.symfony.com/
-[Docker secrets]:  https://docs.docker.com/engine/swarm/secrets/
+[Docker secrets]: https://docs.docker.com/engine/swarm/secrets/
 
 ## Usage
 
@@ -42,8 +42,17 @@ services:
 secrets:
   my_secret_data:
     external: true
-
 ```
+
+In development mode, you may use [`file:`] directive to use secrets without swarm:
+```yaml
+secrets:
+  my_secret_data:
+    # for local development, use from local file
+    file: my_secret_data.secret
+```
+
+[`file:`]: https://docs.docker.com/compose/compose-file/#secrets]
 
 Require the library
 ```sh
